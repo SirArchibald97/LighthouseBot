@@ -8,12 +8,13 @@ config();
 
 // create Discord client
 const client = new Client({ intents: Object.values(GatewayIntentBits).filter(value => isNaN(value)) });
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.TOKEN);
 
 // create MongoDB client
 const mongoClient = new MongoClient(process.env.MONGO_URI);
 mongoClient.connect();
-client.db = mongoClient.db("alex");
+client.stats = mongoClient.db("island-stats");
+client.alex = mongoClient.db("alex");
 
 
 // load Discord events

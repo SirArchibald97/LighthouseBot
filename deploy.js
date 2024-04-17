@@ -13,10 +13,16 @@ module.exports = async (client) => {
         client.commands.set(command.data.name, command);
     }
 
-    const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
-    if (process.env.ENV === "dev") {
-        await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD_ID), { body: commands });
-    } else {
-        await rest.put(Routes.applicationCommands(client.user.id), { body: commands });
+    const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
+
+    try {
+        console.log("Refreshing commands...");
+        const localCommands = commands.filter((command) => command.local);
+        await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), { body: localCommands });
+        const globalCommands = commands.filter((command) => !command.local);
+        await rest.put(Routes.applicationCommands(client.user.id), { body: globalCommands });
+        console.log("Done!");
+    } catch (err) {
+        console.error(err);
     }
 }

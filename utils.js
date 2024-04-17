@@ -60,6 +60,36 @@ module.exports = {
         return prettyNames[uglyNames.indexOf(gameName)];
     },
 
+    // get the rank emoji of a player's rank
+    getRankEmoji: function(ranks) {
+        const icons = { 
+            "NOXCREW": "<:Noxcrew:1224105343672385546>", "MODERATOR": "<:Mod:1224105342196125806>", "CONTESTANT": "<:Contestant:1224112179230281909>", "CREATOR": "<:Creator:1224112198532595812>", 
+            "GRAND_CHAMP_ROYALE": "<:GrandChampRoyale:1224105339431944313>", "GRAND_CHAMP": "<:GrandChamp:1224105340803747961>", "CHAMP": "<:Champ:1224105337762611344>",
+            "DEFAULT": "<:Default:1224111764765933651>"
+        };
+
+        const rankStrings = ["NOXREW", "MODERATOR", "CONTESTANT", "CREATOR", "GRAND_CHAMP_ROYALE", "GRAND_CHAMP", "CHAMP"];
+        for (let rank of rankStrings) {
+            if (ranks.includes(rank)) { return icons[rank]; }
+        }
+        return icons["DEFAULT"];
+    },
+
+    // get a pretty Island game from a raw name
+    getPrettyIslandGame(game) {
+        const names = { "sky_battle": "Sky Battle", "battle_box": "Battle Box", "tgttos": "TGTTOS", "hitw": "HITW", "dynaball": "Dynaball", "pkw.dojo": "PKW Dojo", "pkw.survivor": "PKW Survivor" };
+        return names[game];
+    },
+
+    // get an Island game's icon as an emoji
+    getIslandGameEmoji(game) {
+        const icons = { 
+            "sky_battle": "<:SkyBattle:1224125276397633536>", "battle_box": "<:BattleBox:1224125269439414373>", "tgttos": "<:TGTTOS:1224125271196831845>", "hitw": "<:HITW:1224125271901212713>",
+            "dynaball": "<:Dynaball:1224125273545379970>", "pkw.dojo": "<:ParkourWarrior:1224125274841419857>", "pkw.survivor": "<:ParkourWarrior:1224125274841419857>"
+        };
+        return icons[game];
+    },
+
     // custom error code embed
     getErrorEmbed: function(errorCode) {
         return new EmbedBuilder().setTitle("Oops, sorry about this!").setDescription(`Something went wrong ${errorCode}, please wait a bit and try again later! If the issue persists, contact SirArchibald [here](https://mcchampionship.com/conversations/add?to=sirarchibald).`).setColor("Red");
